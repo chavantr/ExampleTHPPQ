@@ -60,37 +60,47 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
     }
 
     fun getQuestionDetails(id: Int): List<PracticeQuestionDetailModel>? {
+        val db = readableDatabase
+        val args = arrayOf(id.toString())
+        var cursor = db.query("QUESTION_PAPER_DETAIL", null, "Q_ID=?", args, null, null, null)
+        if (cursor.moveToFirst()) {
+            var questionDetail = ArrayList<PracticeQuestionDetailModel>()
+            do {
+                var questionDetailModel = PracticeQuestionDetailModel()
+                questionDetailModel.id = cursor.getInt(cursor.getColumnIndex("ID"))
+                questionDetailModel.question = cursor.getString(cursor.getColumnIndex("QUESTION"))
+                questionDetailModel.optionA = cursor.getString(cursor.getColumnIndex("OPTION_A"))
+                questionDetailModel.optionB = cursor.getString(cursor.getColumnIndex("OPTION_B"))
+                questionDetailModel.optionC = cursor.getString(cursor.getColumnIndex("OPTION_C"))
+                questionDetailModel.optionD = cursor.getString(cursor.getColumnIndex("OPTION_D"))
+                questionDetailModel.correctAns = cursor.getString(cursor.getColumnIndex("CORRECT_ANS"))
+                questionDetailModel.yourAns = cursor.getString(cursor.getColumnIndex("YOUR_ANS"))
+                questionDetailModel.qid = cursor.getInt(cursor.getColumnIndex("Q_ID"))
+                questionDetail.add(questionDetailModel)
 
+            } while (cursor.moveToNext())
 
-
+            return questionDetail
+        }
         return null
     }
 
     fun getSolvedMasterPapers(): List<PracticeQuestionPaperMasterModel>? {
-
         val db = readableDatabase
-
         var cursor = db.query("QUESTION_PAPER_MASTER", null, null, null, null, null, null)
-
         if (cursor.moveToFirst()) {
             var solvedQuestion = ArrayList<PracticeQuestionPaperMasterModel>()
             do {
                 var practiceQuestionMaster = PracticeQuestionPaperMasterModel()
-
                 practiceQuestionMaster.id = cursor.getInt(cursor.getColumnIndex("ID"))
-
                 practiceQuestionMaster.name = cursor.getString(cursor.getColumnIndex("NAME"))
                 practiceQuestionMaster.date = cursor.getString(cursor.getColumnIndex("DATE"))
                 practiceQuestionMaster.totalQue = cursor.getString(cursor.getColumnIndex("NOQ"))
                 practiceQuestionMaster.oqt = cursor.getString(cursor.getColumnIndex("QOT"))
-
                 solvedQuestion.add(practiceQuestionMaster)
-
             } while (cursor.moveToNext())
-
             return solvedQuestion
         }
-
         return null
     }
 
