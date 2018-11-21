@@ -40,25 +40,55 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
         return 0;
     }
 
+    fun createQuestionDetail(questionDetail: List<PracticeQuestionDetailModel>): Long {
+        val db = writableDatabase
+        var count: Long = 0
+        for (i in questionDetail.indices) {
+            var contentValues = ContentValues()
+            contentValues.put("QUESTION", questionDetail.get(i).question)
+            contentValues.put("QUE_DES", questionDetail.get(i).questionDetails)
+            contentValues.put("OPTION_A", questionDetail.get(i).optionA)
+            contentValues.put("OPTION_B", questionDetail.get(i).optionB)
+            contentValues.put("OPTION_C", questionDetail.get(i).optionC)
+            contentValues.put("OPTION_D", questionDetail.get(i).optionD)
+            contentValues.put("CORRECT_ANS", questionDetail.get(i).correctAns)
+            contentValues.put("YOUR_ANS", questionDetail.get(i).yourAns)
+            contentValues.put("Q_ID", questionDetail.get(i).qid)
+            count += db.insert("QUESTION_PAPER_DETAIL", null, contentValues)
+        }
+        return count
+    }
 
-    fun getSolvedMasterPapers(): Array<PracticeQuestionPaperMasterModel>? {
+    fun getQuestionDetails(id: Int): List<PracticeQuestionDetailModel>? {
+
+
+
+        return null
+    }
+
+    fun getSolvedMasterPapers(): List<PracticeQuestionPaperMasterModel>? {
 
         val db = readableDatabase
 
         var cursor = db.query("QUESTION_PAPER_MASTER", null, null, null, null, null, null)
 
         if (cursor.moveToFirst()) {
-
-            var solvedQuestion : Array<PracticeQuestionPaperMasterModel>
-
+            var solvedQuestion = ArrayList<PracticeQuestionPaperMasterModel>()
             do {
-
                 var practiceQuestionMaster = PracticeQuestionPaperMasterModel()
 
+                practiceQuestionMaster.id = cursor.getInt(cursor.getColumnIndex("ID"))
 
+                practiceQuestionMaster.name = cursor.getString(cursor.getColumnIndex("NAME"))
+                practiceQuestionMaster.date = cursor.getString(cursor.getColumnIndex("DATE"))
+                practiceQuestionMaster.totalQue = cursor.getString(cursor.getColumnIndex("NOQ"))
+                practiceQuestionMaster.oqt = cursor.getString(cursor.getColumnIndex("QOT"))
+
+                solvedQuestion.add(practiceQuestionMaster)
 
             } while (cursor.moveToNext())
 
+            return solvedQuestion
         }
 
         return null

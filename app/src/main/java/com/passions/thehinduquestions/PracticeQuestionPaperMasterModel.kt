@@ -2,7 +2,7 @@ package com.passions.thehinduquestions
 
 import java.util.*
 
-data class PracticeQuestionPaperMasterModel(val date: String = Calendar.getInstance().timeInMillis.toString(),
-                                            val name: String = "Question Paper",
-                                            val totalQue: String = "0",
+data class PracticeQuestionPaperMasterModel(var id: Int=0, var date: String = Calendar.getInstance().timeInMillis.toString(),
+                                            var name: String = "Question Paper",
+                                            var totalQue: String = "0",
                                             var oqt: String = "0")

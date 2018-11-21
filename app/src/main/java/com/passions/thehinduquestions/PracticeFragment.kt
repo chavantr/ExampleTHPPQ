@@ -24,6 +24,7 @@ class PracticeFragment : Fragment() {
 
         view.lstPractice.layoutManager = LinearLayoutManager(context)
 
+        if(null!=solvedQuestions)
         view.lstPractice.adapter = QuestionPaperAdapter(solvedQuestions!!)
 
         view.btnStartPractice.setOnClickListener { view ->

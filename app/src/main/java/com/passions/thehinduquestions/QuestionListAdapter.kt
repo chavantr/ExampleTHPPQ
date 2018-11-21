@@ -11,7 +11,7 @@ class QuestionListAdapter : RecyclerView.Adapter<QuestionListAdapter.QuestionVie
 
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): QuestionViewHolder {
-        return QuestionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_question_list, parent, false))
+        return QuestionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_daily_question_list, parent, false))
     }
 
     override fun getItemCount(): Int = 50
