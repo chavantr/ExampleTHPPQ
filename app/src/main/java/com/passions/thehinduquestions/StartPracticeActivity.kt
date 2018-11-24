@@ -14,7 +14,27 @@ class StartPracticeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start_practice)
         practiceDatabaseHelper = PracticeDatabaseHelper(this, "upscprelim", null, 1, null)
         var practiceQuestionPaperMasterModel = PracticeQuestionPaperMasterModel()
-        practiceDatabaseHelper.createMasterQuestionPaper(practiceQuestionPaperMasterModel)
+        val masterId = practiceDatabaseHelper.createMasterQuestionPaper(practiceQuestionPaperMasterModel)
+
+        var practiceDetails = ArrayList<PracticeQuestionDetailModel>()
+
+
+        for (i in questions.indices) {
+            var practiceNode = PracticeQuestionDetailModel()
+            practiceNode.question = questions.get(i).questionTitle
+            practiceNode.questionDetails = questions.get(i).questionDescription
+            practiceNode.optionA = questions.get(i).optionA
+            practiceNode.optionB = questions.get(i).optionB
+            practiceNode.optionC = questions.get(i).optionC
+            practiceNode.optionD = questions.get(i).optionD
+            practiceNode.correctAns = questions.get(i).correctAnswer
+            practiceNode.yourAns = questions.get(i).yourAnswer
+            practiceNode.qid = masterId
+            practiceDetails.add(practiceNode)
+        }
+
+        practiceDatabaseHelper.createQuestionDetail(practiceDetails)
+
         lstPracticeQuestion.layoutManager = LinearLayoutManager(this)
         lstPracticeQuestion.adapter = StartPracticeAdapter(questions)
     }

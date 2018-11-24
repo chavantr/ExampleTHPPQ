@@ -59,6 +59,15 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
         return count
     }
 
+    fun updateQuestionAnswer(practiceQuestionDetail: QuestionModel): Int {
+        val db = writableDatabase
+        var contentValues = ContentValues()
+        contentValues.put("YOUR_ANS", practiceQuestionDetail.yourAnswer)
+        print("ID"+ practiceQuestionDetail.id + "Your Answer" + practiceQuestionDetail.yourAnswer)
+        val args = arrayOf(practiceQuestionDetail.id)
+        return db.update("QUESTION_PAPER_DETAIL", contentValues, "ID=?", args)
+    }
+
     fun getQuestionDetails(id: Int): List<PracticeQuestionDetailModel>? {
         val db = readableDatabase
         val args = arrayOf(id.toString())

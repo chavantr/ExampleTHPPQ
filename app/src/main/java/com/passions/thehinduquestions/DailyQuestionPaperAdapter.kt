@@ -21,12 +21,12 @@ class DailyQuestionPaperAdapter(questions: Array<QuestionModel>) : RecyclerView.
             viewHolder.btnShowDetails.visibility = View.VISIBLE
         }
 
-        viewHolder.btnShowDetails.setOnClickListener({ view ->
+        viewHolder.btnShowDetails.setOnClickListener { view ->
             val intent = Intent(view.context, QuestionDetailsScrollActivity::class.java)
             intent.putExtra("extra", questions.get(position).fullDescription)
             intent.putExtra("type", questions.get(position).type)
             view.context.startActivity(intent)
-        })
+        }
         viewHolder.lblQuestion.text = "${position.plus(1)}) " + questions.get(position).questionTitle
         if (!TextUtils.isEmpty(questions.get(position).questionDescription))
             viewHolder.lblQuestionDescription.text = questions.get(position).questionDescription

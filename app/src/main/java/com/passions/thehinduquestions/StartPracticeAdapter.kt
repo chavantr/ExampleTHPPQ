@@ -12,7 +12,13 @@ class StartPracticeAdapter(var questions: Array<QuestionModel>) : RecyclerView.A
 
     var question: Array<QuestionModel> = questions
 
+
+    private lateinit var practiceDatabaseHelper: PracticeDatabaseHelper
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): StartPracticeHolder {
+
+        practiceDatabaseHelper = PracticeDatabaseHelper(parent.context, "upscprelim", null, 1, null)
+
         return StartPracticeHolder(LayoutInflater.from(parent.context).inflate(R.layout.practice_question_row, parent, false))
     }
 
@@ -24,18 +30,66 @@ class StartPracticeAdapter(var questions: Array<QuestionModel>) : RecyclerView.A
             viewHolder.lblQuestionDescription.text = questions.get(position).questionDescription
         else
             viewHolder.lblQuestionDescription.visibility = View.GONE
+
         viewHolder.lblOptionA.text = questions.get(position).optionA
         viewHolder.lblOptionB.text = questions.get(position).optionB
         viewHolder.lblOptionC.text = questions.get(position).optionC
         viewHolder.lblOptionD.text = questions.get(position).optionD
 
-        viewHolder.btnSubmit.setOnClickListener {
+
+        if (question.get(position).submitted) {
             viewHolder.lblOptionA.visibility = View.GONE
             viewHolder.lblOptionB.visibility = View.GONE
             viewHolder.lblOptionC.visibility = View.GONE
             viewHolder.lblOptionD.visibility = View.GONE
+            viewHolder.btnSubmit.visibility = View.GONE
+        } else {
+            viewHolder.lblOptionA.visibility = View.VISIBLE
+            viewHolder.lblOptionB.visibility = View.VISIBLE
+            viewHolder.lblOptionC.visibility = View.VISIBLE
+            viewHolder.lblOptionD.visibility = View.VISIBLE
+            viewHolder.btnSubmit.visibility = View.VISIBLE
+        }
+
+
+        viewHolder.btnSubmit.setOnClickListener {
+
+            var yourAnswer: String
+
+            if (viewHolder.lblOptionA.isChecked) {
+                yourAnswer = "A"
+            } else if (viewHolder.lblOptionB.isChecked) {
+                yourAnswer = "B"
+            } else if (viewHolder.lblOptionC.isChecked) {
+                yourAnswer = "C"
+            } else if (viewHolder.lblOptionD.isChecked) {
+                yourAnswer = "D"
+            } else {
+                yourAnswer = ""
+            }
+
+            var practiceQuestionDetailModel = question.get(position)
+
+            practiceQuestionDetailModel.yourAnswer = yourAnswer
+
+            if (!question.get(position).submitted) {
+                if (!TextUtils.isEmpty(yourAnswer)) {
+                    val inserted = practiceDatabaseHelper.updateQuestionAnswer(practiceQuestionDetailModel)
+                    print("Inserted $inserted")
+                }
+                question.get(position).submitted = true
+            }
+
+            viewHolder.lblOptionA.visibility = View.GONE
+            viewHolder.lblOptionB.visibility = View.GONE
+            viewHolder.lblOptionC.visibility = View.GONE
+            viewHolder.lblOptionD.visibility = View.GONE
+            it.visibility = View.GONE
+
+
         }
     }
+
 
     inner class StartPracticeHolder(view: View) : RecyclerView.ViewHolder(view) {
         val lblQuestion = view.lblQuestionTitle
