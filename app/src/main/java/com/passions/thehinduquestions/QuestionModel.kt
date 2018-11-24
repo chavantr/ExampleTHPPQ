@@ -9,6 +9,6 @@ data class QuestionModel(val id: String,
                          val correctAnswer: String,
                          val fullDescription: String,
                          val type: String,
-                         val viewAnswer: Boolean = false,
+                         var viewAnswer: Boolean = false,
                          var yourAnswer: String = "",
                          var submitted: Boolean = false)

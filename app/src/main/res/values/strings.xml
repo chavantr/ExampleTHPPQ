@@ -98,4 +98,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="submit">Submit</string>
+    <string name="view_description">View Description</string>
+    <string name="view_answer">View Answer</string>
 </resources>

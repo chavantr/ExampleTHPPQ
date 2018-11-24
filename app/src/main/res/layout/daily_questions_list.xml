@@ -9,7 +9,8 @@
     android:clickable="true"
     android:elevation="7dp"
     android:foreground="?android:attr/selectableItemBackground"
-    android:translationZ="5dp">
+    android:translationZ="5dp"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +26,6 @@
             android:fontFamily="@font/roboto_bold"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:text="The recent in news"
             android:textColor="@color/colorBlack" />
 
 
@@ -36,7 +36,6 @@
             android:fontFamily="@font/roboto_bold"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:text="which is sentence is correct"
             android:textColor="@color/colorBlack" />
 
 
@@ -44,11 +43,10 @@
             android:id="@+id/lblOptionA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+            android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:text="@string/app_name"
             android:textColor="@color/colorAccent" />
 
 
@@ -56,11 +54,10 @@
             android:id="@+id/lblOptionB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+            android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:text="@string/app_name"
             android:textColor="@color/colorAccent" />
 
 
@@ -68,11 +65,10 @@
             android:id="@+id/lblOptionC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+            android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:text="@string/app_name"
             android:textColor="@color/colorAccent" />
 
 
@@ -80,11 +76,10 @@
             android:id="@+id/lblOptionD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+            android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:text="@string/app_name"
             android:textColor="@color/colorAccent" />
 
 
@@ -94,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto_regular"
-            android:text="View Answer"
+            android:text="@string/view_answer"
             android:textAllCaps="false"
             android:textColor="@color/colorBlack" />
 
@@ -103,12 +98,11 @@
             android:id="@+id/lblCorrectAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+            android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_bold"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:gravity="center_vertical"
-            android:text="Correct Answer C"
             android:textColor="@color/colorBlack"
             android:visibility="gone" />
 
@@ -119,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto_regular"
-            android:text="View Description"
+            android:text="@string/view_description"
             android:textAllCaps="false"
             android:textColor="@color/colorBlack"
             android:visibility="gone" />

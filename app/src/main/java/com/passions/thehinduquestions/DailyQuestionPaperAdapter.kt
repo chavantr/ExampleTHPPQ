@@ -19,6 +19,7 @@ class DailyQuestionPaperAdapter(questions: Array<QuestionModel>) : RecyclerView.
         viewHolder.bntViewAnsswer.setOnClickListener {
             viewHolder.lblCorrectAnswer.visibility = View.VISIBLE
             viewHolder.btnShowDetails.visibility = View.VISIBLE
+            questions.get(position).viewAnswer = true
         }
 
         viewHolder.btnShowDetails.setOnClickListener { view ->
@@ -27,6 +28,15 @@ class DailyQuestionPaperAdapter(questions: Array<QuestionModel>) : RecyclerView.
             intent.putExtra("type", questions.get(position).type)
             view.context.startActivity(intent)
         }
+
+        if (questions.get(position).viewAnswer) {
+            viewHolder.lblCorrectAnswer.visibility = View.VISIBLE
+            viewHolder.btnShowDetails.visibility = View.VISIBLE
+        } else {
+            viewHolder.lblCorrectAnswer.visibility = View.GONE
+            viewHolder.btnShowDetails.visibility = View.GONE
+        }
+
         viewHolder.lblQuestion.text = "${position.plus(1)}) " + questions.get(position).questionTitle
         if (!TextUtils.isEmpty(questions.get(position).questionDescription))
             viewHolder.lblQuestionDescription.text = questions.get(position).questionDescription
