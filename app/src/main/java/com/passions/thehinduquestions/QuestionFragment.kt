@@ -34,7 +34,12 @@ class QuestionFragment : Fragment() {
 
         view.lstQuestions.layoutManager = LinearLayoutManager(context)
 
-        view.lstQuestions.adapter = QuestionListAdapter()
+        val myDatabase = MyDatabase(context, "upscprelim", null, 1)
+
+        var lstMonthName = myDatabase.monthName
+
+        if (null != lstMonthName)
+            view.lstQuestions.adapter = QuestionListAdapter(lstMonthName)
 
         return view
     }

@@ -9,9 +9,9 @@
     android:layout_marginBottom="7dp"
     android:clickable="true"
     android:elevation="7dp"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:translationZ="5dp"
-    android:focusable="true">
+    android:translationZ="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,6 @@
             android:fontFamily="@font/lobster_regular"
             android:gravity="center_vertical"
             android:padding="9dp"
-
             android:textColor="#000000"
             android:textSize="17sp" />
 
@@ -36,9 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-
+            android:lineSpacingExtra="1dp"
+            android:padding="9dp"
             android:textColor="@color/colorBlack" />
 
 

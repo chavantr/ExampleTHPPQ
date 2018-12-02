@@ -3,50 +3,72 @@ package com.passions.thehinduquestions
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.facebook.ads.Ad
+import com.facebook.ads.AdError
+import com.facebook.ads.NativeAd
+import com.facebook.ads.NativeAdListener
+import com.passions.thehinduquestions.binder.DailyQuestionAdAdapter
 import kotlinx.android.synthetic.main.activity_daily_question.*
 
 class DailyQuestionActivity : AppCompatActivity() {
+
+
+    private lateinit var questionList: ArrayList<Any>
+    private lateinit var dailyQuestionAdapter: DailyQuestionAdAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_question)
 
         lstDailyQuestions.layoutManager = LinearLayoutManager(this)
-        lstDailyQuestions.adapter = DailyQuestionPaperAdapter(questions)
+
+        val myDatabase = MyDatabase(this, "upscprelim", null, 1)
+
+        val id = intent.getIntExtra("id", 0)
+        if (null != id)
+            questionList = myDatabase.getQuestionMonthWise(id)
+
+        val nativeAd = NativeAd(this, "704548526584810_706693733036956")
+
+        nativeAd.setAdListener(adListener)
+
+        nativeAd.loadAd()
+
+        dailyQuestionAdapter = DailyQuestionAdAdapter(questionList)
+
+        if (null != questionList)
+        //lstDailyQuestions.adapter = DailyQuestionPaperAdapter(questionList)
+            lstDailyQuestions.adapter = dailyQuestionAdapter
     }
 
-    companion object {
-        val questions = arrayOf(
-                QuestionModel("", "Global Human Capital Index, recently in news, is published by", "", "World Bank", "World Economic Forum", "The International Economic Association",
-                        "Economic Development Organisation", "b", "Self-explanatory", "International organisations"),
+    private val adListener = object : NativeAdListener {
 
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
+        override fun onAdClicked(p0: Ad?) {
 
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"), QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"),
-                QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                        "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations"), QuestionModel("", "With reference to “the Inter-American Court of Human Rights (IACHR), recently in \n" +
-                "news, which of the following statement(s) is/are correct?", "1) The IACHR is an independent, multinational court that handles the human rights cases of people affected by the laws of countries that are members of the Organisation of American States (OAS).\n2) It is a temporary body which monitors the general human rights and publishes country-specific human rights reports.\n Select the correct answer using the code given below:", "1 only", "2 only", "Both 1 and 2", "Neither 1 nor 1", "a", "IACHR is the permanent body which monitors general human rights only when necessary.", "International organisations")
-        )
+        }
+
+        override fun onMediaDownloaded(p0: Ad?) {
+
+        }
+
+        override fun onError(p0: Ad?, p1: AdError?) {
+
+        }
+
+        override fun onAdLoaded(ad: Ad?) {
+            for (i in questionList.indices) {
+                if (i % 5 == 0 && i != 0) {
+                    questionList.add(i, ad!!)
+                }
+            }
+
+            dailyQuestionAdapter.notifyDataSetChanged()
+        }
+
+        override fun onLoggingImpression(p0: Ad?) {
+
+        }
+
     }
+
 }

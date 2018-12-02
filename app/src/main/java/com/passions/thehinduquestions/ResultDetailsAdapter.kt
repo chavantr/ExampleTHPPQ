@@ -24,10 +24,13 @@ class ResultDetailsAdapter(var practiceDetails: List<PracticeQuestionDetailModel
         viewHolder.lblCorrectAnswer.text = "Correct Answer : " + practiceDetailsMode.get(position).correctAns.toUpperCase()
         viewHolder.lblYourAnswer.text = "Your Answer : " + practiceDetailsMode.get(position).yourAns.toUpperCase()
 
-        if (!TextUtils.isEmpty(practiceDetailsMode.get(position).questionDetails))
-            viewHolder.lblQuestionDescription.text = practiceDetailsMode.get(position).questionDetails
-        else
+        if (!TextUtils.isEmpty(practiceDetailsMode.get(position).questionDetails)) {
+            viewHolder.lblQuestionDescription.text = practiceDetailsMode.get(position).questionDetails.replace("\\n", "")
+            viewHolder.lblQuestionDescription.visibility = View.VISIBLE
+        } else {
+            viewHolder.lblQuestionDescription.text = ""
             viewHolder.lblQuestionDescription.visibility = View.GONE
+        }
         viewHolder.lblOptionA.text = "A) " + practiceDetailsMode.get(position).optionA
         viewHolder.lblOptionB.text = "B) " + practiceDetailsMode.get(position).optionB
         viewHolder.lblOptionC.text = "C) " + practiceDetailsMode.get(position).optionC

@@ -100,4 +100,6 @@
     <string name="submit">Submit</string>
     <string name="view_description">View Description</string>
     <string name="view_answer">View Answer</string>
+    <string name="start_feedback">Start Practice</string>
+    <string name="install_now">Install Now</string>
 </resources>

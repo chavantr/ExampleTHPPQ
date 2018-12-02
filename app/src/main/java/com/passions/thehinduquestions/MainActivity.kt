@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var practiceDatabaseHelper = PracticeDatabaseHelper(this, "upscprelim", null, 1, null)
+        var practiceDatabaseHelper = PracticeDatabaseHelper(this, "upscprelimextra", null, 1, null)
 
-        //solvedQuestions = practiceDatabaseHelper.get
+        val myDatabase = MyDatabase(this, "upscprelim", null, 1)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(HomeFragment())
@@ -48,7 +48,4 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    companion object {
-        private lateinit var solvedQuestions: Array<PracticeQuestionPaperMasterModel>
-    }
 }

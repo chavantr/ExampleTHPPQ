@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.practice_question_row.view.*
 
 
-class StartPracticeAdapter(var questions: Array<QuestionModel>) : RecyclerView.Adapter<StartPracticeAdapter.StartPracticeHolder>() {
+class StartPracticeAdapter(var questions: List<PracticeQuestionDetailModel>) : RecyclerView.Adapter<StartPracticeAdapter.StartPracticeHolder>() {
 
-    var question: Array<QuestionModel> = questions
+    var question: List<PracticeQuestionDetailModel> = questions
 
 
     private lateinit var practiceDatabaseHelper: PracticeDatabaseHelper
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): StartPracticeHolder {
 
-        practiceDatabaseHelper = PracticeDatabaseHelper(parent.context, "upscprelim", null, 1, null)
+        practiceDatabaseHelper = PracticeDatabaseHelper(parent.context, "upscprelimextra", null, 1, null)
 
         return StartPracticeHolder(LayoutInflater.from(parent.context).inflate(R.layout.practice_question_row, parent, false))
     }
@@ -25,11 +25,14 @@ class StartPracticeAdapter(var questions: Array<QuestionModel>) : RecyclerView.A
     override fun getItemCount(): Int = question.size
 
     override fun onBindViewHolder(viewHolder: StartPracticeHolder, position: Int) {
-        viewHolder.lblQuestion.text = "${position.plus(1)}) " + questions.get(position).questionTitle
-        if (!TextUtils.isEmpty(questions.get(position).questionDescription))
-            viewHolder.lblQuestionDescription.text = questions.get(position).questionDescription
-        else
+        viewHolder.lblQuestion.text = "${position.plus(1)}) " + questions.get(position).question
+        if (!TextUtils.isEmpty(questions.get(position).questionDetails)) {
+            viewHolder.lblQuestionDescription.text = questions.get(position).questionDetails.replace("\\n", "")
+            viewHolder.lblQuestionDescription.visibility = View.VISIBLE
+        } else {
             viewHolder.lblQuestionDescription.visibility = View.GONE
+            viewHolder.lblQuestionDescription.text = ""
+        }
 
         viewHolder.lblOptionA.text = questions.get(position).optionA
         viewHolder.lblOptionB.text = questions.get(position).optionB
@@ -70,7 +73,7 @@ class StartPracticeAdapter(var questions: Array<QuestionModel>) : RecyclerView.A
 
             var practiceQuestionDetailModel = question.get(position)
 
-            practiceQuestionDetailModel.yourAnswer = yourAnswer
+            practiceQuestionDetailModel.yourAns = yourAnswer
 
             if (!question.get(position).submitted) {
                 if (!TextUtils.isEmpty(yourAnswer)) {

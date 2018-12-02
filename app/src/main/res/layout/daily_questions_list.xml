@@ -2,15 +2,15 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="7dp"
     android:layout_marginLeft="7dp"
-    android:layout_marginRight="7dp"
     android:layout_marginTop="7dp"
+    android:layout_marginRight="7dp"
+    android:layout_marginBottom="7dp"
     android:clickable="true"
     android:elevation="7dp"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:translationZ="5dp"
-    android:focusable="true">
+    android:translationZ="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,15 +18,14 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-
         <TextView
             android:id="@+id/lblQuestionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:textColor="@color/colorBlack" />
+            android:paddingBottom="3dp"
+            android:textColor="@color/color_red" />
 
 
         <TextView
@@ -34,8 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/colorBlack" />
 
 
@@ -45,8 +44,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/colorAccent" />
 
 
@@ -56,8 +55,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/colorAccent" />
 
 
@@ -67,8 +66,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/colorAccent" />
 
 
@@ -78,8 +77,8 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_regular"
-            android:paddingBottom="3dp"
             android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/colorAccent" />
 
 
@@ -100,9 +99,9 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_chevron_right_black_24dp"
             android:fontFamily="@font/roboto_bold"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
             android:gravity="center_vertical"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/colorBlack"
             android:visibility="gone" />
 

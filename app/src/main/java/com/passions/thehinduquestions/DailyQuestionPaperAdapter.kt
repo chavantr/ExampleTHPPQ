@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.daily_questions_list.view.*
 
-class DailyQuestionPaperAdapter(questions: Array<QuestionModel>) : RecyclerView.Adapter<DailyQuestionPaperAdapter.QuestionPaperViewHolder>() {
-    var questions: Array<QuestionModel> = questions
+class DailyQuestionPaperAdapter(questions: List<QuestionModel>) : RecyclerView.Adapter<DailyQuestionPaperAdapter.QuestionPaperViewHolder>() {
+    var questions: List<QuestionModel> = questions
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): QuestionPaperViewHolder {
         return QuestionPaperViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.daily_questions_list, parent, false))
     }
@@ -38,10 +38,13 @@ class DailyQuestionPaperAdapter(questions: Array<QuestionModel>) : RecyclerView.
         }
 
         viewHolder.lblQuestion.text = "${position.plus(1)}) " + questions.get(position).questionTitle
-        if (!TextUtils.isEmpty(questions.get(position).questionDescription))
-            viewHolder.lblQuestionDescription.text = questions.get(position).questionDescription
-        else
+        if (!TextUtils.isEmpty(questions.get(position).questionDescription)) {
+            viewHolder.lblQuestionDescription.text = questions.get(position).questionDescription.replace("\\n","")
+            viewHolder.lblQuestionDescription.visibility = View.VISIBLE
+        } else {
+            viewHolder.lblQuestionDescription.text = ""
             viewHolder.lblQuestionDescription.visibility = View.GONE
+        }
         viewHolder.lblOptionA.text = "A) " + questions.get(position).optionA
         viewHolder.lblOptionB.text = "B) " + questions.get(position).optionB
         viewHolder.lblOptionC.text = "C) " + questions.get(position).optionC

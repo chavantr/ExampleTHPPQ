@@ -9,4 +9,5 @@ data class PracticeQuestionDetailModel(var id: Int = 0,
                                        var optionD: String = "",
                                        var correctAns: String = "",
                                        var yourAns: String = "",
-                                       var qid: Int = 0)
+                                       var qid: Int = 0,
+                                       var submitted: Boolean = false)

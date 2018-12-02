@@ -18,16 +18,16 @@ class PracticeFragment : Fragment() {
 
         var view = inflater.inflate(R.layout.fragment_practice, container, false)
 
-        var practiceDatabaseHelper = PracticeDatabaseHelper(context, "upscprelim", null, 1, null)
+        var practiceDatabaseHelper = PracticeDatabaseHelper(context, "upscprelimextra", null, 1, null)
 
         val solvedQuestions = practiceDatabaseHelper.getSolvedMasterPapers()
 
         view.lstPractice.layoutManager = LinearLayoutManager(context)
 
-        if(null!=solvedQuestions)
-        view.lstPractice.adapter = QuestionPaperAdapter(solvedQuestions!!)
+        if (null != solvedQuestions && !solvedQuestions.isEmpty())
+            view.lstPractice.adapter = QuestionPaperAdapter(solvedQuestions!!)
 
-        view.btnStartPractice.setOnClickListener { view ->
+        view.cvContainer.setOnClickListener { view ->
             val intent = Intent(view.context, StartPracticeActivity::class.java)
             view.context.startActivity(intent)
         }

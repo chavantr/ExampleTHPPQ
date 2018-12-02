@@ -21,8 +21,9 @@ class QuestionPaperAdapter(var solvedQuestionPapers: List<PracticeQuestionPaperM
 
     override fun onBindViewHolder(viewHolder: QuestionPaperViewHolder, position: Int) {
         viewHolder.lblName.text = solvedQuestionsMaster.get(position).name + " " + position.plus(1)
-        viewHolder.lblDate.text = "Result : Pass"
+        viewHolder.lblDate.visibility = View.GONE
         viewHolder.llContainer.setOnClickListener {
+
             val intent = Intent(it.context, ResultActivity::class.java)
             intent.putExtra("id",solvedQuestionsMaster.get(position).id)
             it.context.startActivity(intent)

@@ -14,7 +14,7 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
 
     private val CREATE_MASTER_PRACTICE_QUESTION = "CREATE TABLE IF NOT EXISTS QUESTION_PAPER_MASTER (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT, NAME TEXT, NOQ TEXT, QOT TEXT);"
 
-    private val CREATE_DETAIL_PRACTICE_QUESTION = "CREATE TABLE IF NOT EXISTS QUESTION_PAPER_DETAIL (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTION TEXT, QUE_DES, TEXT, OPTION_A TEXT, OPTION_B TEXT,OPTION_C TEXT,OPTION_D TEXT,CORRECT_ANS TEXT, YOUR_ANS TEXT, Q_ID INTEGER);"
+    private val CREATE_DETAIL_PRACTICE_QUESTION = "CREATE TABLE IF NOT EXISTS QUESTION_PAPER_DETAIL (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTION TEXT, QUE_DES, TEXT, OPTION_A TEXT, OPTION_B TEXT,OPTION_C TEXT,OPTION_D TEXT,CORRECT_ANS TEXT, YOUR_ANS TEXT, Q_ID INTEGER, REF_ID INTEGER);"
 
 
     override fun onCreate(database: SQLiteDatabase?) {
@@ -37,7 +37,7 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
         if (inserted > 0) {
             return getLastInserted()
         }
-        return 0;
+        return 1;
     }
 
     fun createQuestionDetail(questionDetail: List<PracticeQuestionDetailModel>): Long {
@@ -54,18 +54,18 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
             contentValues.put("CORRECT_ANS", questionDetail.get(i).correctAns)
             contentValues.put("YOUR_ANS", questionDetail.get(i).yourAns)
             contentValues.put("Q_ID", questionDetail.get(i).qid)
+            contentValues.put("REF_ID", questionDetail.get(i).id)
             count += db.insert("QUESTION_PAPER_DETAIL", null, contentValues)
         }
         return count
     }
 
-    fun updateQuestionAnswer(practiceQuestionDetail: QuestionModel): Int {
+    fun updateQuestionAnswer(practiceQuestionDetail: PracticeQuestionDetailModel): Int {
         val db = writableDatabase
         var contentValues = ContentValues()
-        contentValues.put("YOUR_ANS", practiceQuestionDetail.yourAnswer)
-        print("ID"+ practiceQuestionDetail.id + "Your Answer" + practiceQuestionDetail.yourAnswer)
-        val args = arrayOf(practiceQuestionDetail.id)
-        return db.update("QUESTION_PAPER_DETAIL", contentValues, "ID=?", args)
+        contentValues.put("YOUR_ANS", practiceQuestionDetail.yourAns)
+        val args = arrayOf(practiceQuestionDetail.id.toString())
+        return db.update("QUESTION_PAPER_DETAIL", contentValues, "REF_ID=?", args)
     }
 
     fun getQuestionDetails(id: Int): List<PracticeQuestionDetailModel>? {
@@ -78,6 +78,7 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
                 var questionDetailModel = PracticeQuestionDetailModel()
                 questionDetailModel.id = cursor.getInt(cursor.getColumnIndex("ID"))
                 questionDetailModel.question = cursor.getString(cursor.getColumnIndex("QUESTION"))
+                questionDetailModel.questionDetails =cursor.getString(cursor.getColumnIndex("QUE_DES"))
                 questionDetailModel.optionA = cursor.getString(cursor.getColumnIndex("OPTION_A"))
                 questionDetailModel.optionB = cursor.getString(cursor.getColumnIndex("OPTION_B"))
                 questionDetailModel.optionC = cursor.getString(cursor.getColumnIndex("OPTION_C"))
