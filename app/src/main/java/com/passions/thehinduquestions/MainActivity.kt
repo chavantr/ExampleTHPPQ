@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var practiceDatabaseHelper = PracticeDatabaseHelper(this, "upscprelimextra", null, 1, null)
+        var practiceDatabaseHelper = PracticeDatabaseHelper(this, "upscprelimextra", null, 1)
 
-        val myDatabase = MyDatabase(this, "upscprelim", null, 1)
+        val myDatabase = MyDatabase(this, DatabaseConstants.databaseName, null, DatabaseConstants.version)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(HomeFragment())

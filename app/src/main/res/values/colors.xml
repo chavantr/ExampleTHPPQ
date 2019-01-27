@@ -11,5 +11,6 @@
     <color name="colorNavText">#01294b</color>
     <color name="colorBlack">#000000</color>
     <color name="color_red">#FF0000</color>
+    <color name="color_black">#000000</color>
 
 </resources>

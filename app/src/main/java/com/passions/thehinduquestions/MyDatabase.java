@@ -20,7 +20,7 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     public List<MonthNameModel> getMonthName() {
         SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.query("MonthCategory", null, null, null, null, null, null);
+        Cursor cursor = db.query("MonthCategory", null, "Year=?", new String[]{"2018"}, null, null, null);
         if (cursor.moveToFirst()) {
             List<MonthNameModel> monthName = new ArrayList<>();
             do {
@@ -63,11 +63,11 @@ public class MyDatabase extends SQLiteAssetHelper {
         return null;
     }
 
-    public List<PracticeQuestionDetailModel> getPracticeQuestion(int masterId) {
+    public ArrayList<Object> getPracticeQuestion(int masterId) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM QuestionMaster ORDER BY RANDOM() LIMIT 20", null);
         if (cursor.moveToFirst()) {
-            List<PracticeQuestionDetailModel> questionModels = new ArrayList<>();
+            ArrayList<Object> questionModels = new ArrayList<>();
             do {
                 PracticeQuestionDetailModel questionModel = new PracticeQuestionDetailModel(cursor.getInt(cursor.getColumnIndex("ID")),
                         cursor.getString(cursor.getColumnIndex("Question")),
@@ -78,13 +78,14 @@ public class MyDatabase extends SQLiteAssetHelper {
                         cursor.getString(cursor.getColumnIndex("OptionD")),
                         cursor.getString(cursor.getColumnIndex("CorrectAnswer")),
                         "",
-                        masterId,false);
+                        masterId, false);
                 questionModels.add(questionModel);
             } while (cursor.moveToNext());
             return questionModels;
         }
         return null;
     }
+
 
 
 }

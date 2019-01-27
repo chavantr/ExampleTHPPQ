@@ -8,7 +8,12 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -155,6 +160,11 @@ public class SQLiteAssetHelper extends SQLiteOpenHelper {
 
 
     @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+    }
+
+    @Override
     public synchronized SQLiteDatabase getReadableDatabase() {
         if (mDatabase != null && mDatabase.isOpen()) {
             return mDatabase; // The database is already open for business
@@ -220,7 +230,7 @@ public class SQLiteAssetHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        Log.w(TAG, "Upgrading database " + mName + " from version "
+       /* Log.w(TAG, "Upgrading database " + mName + " from version "
                 + oldVersion + " to " + newVersion + "...");
 
         ArrayList<String> paths = new ArrayList<String>();
@@ -255,7 +265,14 @@ public class SQLiteAssetHelper extends SQLiteOpenHelper {
         }
 
         Log.w(TAG, "Successfully upgraded database " + mName + " from version "
-                + oldVersion + " to " + newVersion);
+                + oldVersion + " to " + newVersion);*/
+
+       if(newVersion > oldVersion){
+           delete();
+           db = createOrOpenDatabase(true);
+           //db.setVersion(newVersion);
+           //version = db.getVersion();
+       }
 
     }
 
@@ -279,6 +296,16 @@ public class SQLiteAssetHelper extends SQLiteOpenHelper {
             copyDatabaseFromAssets();
             db = returnDatabase();
             return db;
+        }
+    }
+
+    private void delete()
+    {
+        File file = new File(mDatabasePath  + "/" + mName);
+        if(file.exists())
+        {
+            file.delete();
+            System.out.println("delete database file.");
         }
     }
 

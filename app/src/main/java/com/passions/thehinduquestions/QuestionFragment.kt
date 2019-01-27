@@ -34,7 +34,7 @@ class QuestionFragment : Fragment() {
 
         view.lstQuestions.layoutManager = LinearLayoutManager(context)
 
-        val myDatabase = MyDatabase(context, "upscprelim", null, 1)
+        val myDatabase = MyDatabase(context, DatabaseConstants.databaseName, null, DatabaseConstants.version)
 
         var lstMonthName = myDatabase.monthName
 

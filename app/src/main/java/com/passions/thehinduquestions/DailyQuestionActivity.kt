@@ -1,7 +1,7 @@
 package com.passions.thehinduquestions
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.facebook.ads.Ad
 import com.facebook.ads.AdError
@@ -22,7 +22,7 @@ class DailyQuestionActivity : AppCompatActivity() {
 
         lstDailyQuestions.layoutManager = LinearLayoutManager(this)
 
-        val myDatabase = MyDatabase(this, "upscprelim", null, 1)
+        val myDatabase = MyDatabase(this, DatabaseConstants.databaseName, null, DatabaseConstants.version)
 
         val id = intent.getIntExtra("id", 0)
         if (null != id)
@@ -57,7 +57,7 @@ class DailyQuestionActivity : AppCompatActivity() {
 
         override fun onAdLoaded(ad: Ad?) {
             for (i in questionList.indices) {
-                if (i % 5 == 0 && i != 0) {
+                if (i % 4 == 0 && i != 0) {
                     questionList.add(i, ad!!)
                 }
             }

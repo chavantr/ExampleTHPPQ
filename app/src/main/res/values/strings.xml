@@ -102,4 +102,5 @@
     <string name="view_answer">View Answer</string>
     <string name="start_feedback">Start Practice</string>
     <string name="install_now">Install Now</string>
+    <string name="today_s_quote">Today\'s Quote</string>
 </resources>

@@ -20,6 +20,7 @@ class ResultDetailsAdapter(var practiceDetails: List<PracticeQuestionDetailModel
     override fun getItemCount(): Int = practiceDetailsMode.size
 
     override fun onBindViewHolder(viewHolder: ResultDetailsViewHolder, position: Int) {
+
         viewHolder.lblQuestion.text = "${position.plus(1)}) " + practiceDetailsMode.get(position).question
         viewHolder.lblCorrectAnswer.text = "Correct Answer : " + practiceDetailsMode.get(position).correctAns.toUpperCase()
         viewHolder.lblYourAnswer.text = "Your Answer : " + practiceDetailsMode.get(position).yourAns.toUpperCase()

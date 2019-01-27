@@ -4,5 +4,5 @@ import java.util.*
 
 data class PracticeQuestionPaperMasterModel(var id: Int=0, var date: String = Calendar.getInstance().timeInMillis.toString(),
                                             var name: String = "Question Paper",
-                                            var totalQue: String = "0",
+                                            var totalQue: String = "20",
                                             var oqt: String = "0")

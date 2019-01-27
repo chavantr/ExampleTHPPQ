@@ -13,11 +13,14 @@ class StartPracticeAdapter(var questions: List<PracticeQuestionDetailModel>) : R
     var question: List<PracticeQuestionDetailModel> = questions
 
 
+    private lateinit var myDatabase: MyDatabase
     private lateinit var practiceDatabaseHelper: PracticeDatabaseHelper
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): StartPracticeHolder {
 
-        practiceDatabaseHelper = PracticeDatabaseHelper(parent.context, "upscprelimextra", null, 1, null)
+        practiceDatabaseHelper = PracticeDatabaseHelper(parent.context, "upscprelimextra", null, 1)
+
+        myDatabase = MyDatabase(parent.context, DatabaseConstants.databaseName, null, DatabaseConstants.version)
 
         return StartPracticeHolder(LayoutInflater.from(parent.context).inflate(R.layout.practice_question_row, parent, false))
     }
@@ -25,6 +28,7 @@ class StartPracticeAdapter(var questions: List<PracticeQuestionDetailModel>) : R
     override fun getItemCount(): Int = question.size
 
     override fun onBindViewHolder(viewHolder: StartPracticeHolder, position: Int) {
+
         viewHolder.lblQuestion.text = "${position.plus(1)}) " + questions.get(position).question
         if (!TextUtils.isEmpty(questions.get(position).questionDetails)) {
             viewHolder.lblQuestionDescription.text = questions.get(position).questionDetails.replace("\\n", "")

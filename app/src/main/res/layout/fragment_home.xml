@@ -6,44 +6,15 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
+        android:id="@+id/banner_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:clickable="true"
-        android:elevation="7dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:translationZ="5dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="3dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lobster_regular"
-                android:text="Today's Quote"
-                android:textColor="@color/colorAccent"
-                android:textSize="22sp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lobster_regular"
-                android:padding="7dp"
-                android:text="Concentrate all your thoughts upon the work at hand. The sun's rays do not burn untill brought to a focus."
-                android:textColor="#000000"
-                android:textSize="17sp" />
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical" />
 
 
     <android.support.v7.widget.CardView
@@ -66,56 +37,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lobster_regular"
-                android:text="History Of The Day"
+                android:text="@string/today_s_quote"
                 android:textColor="@color/colorAccent"
                 android:textSize="22sp" />
 
 
             <TextView
+                android:id="@+id/lblQuote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lobster_regular"
                 android:padding="7dp"
-                android:text="Concentrate all your thoughts upon the work at hand. The sun's rays do not burn untill brought to a focus."
-                android:textColor="#000000"
-                android:textSize="17sp" />
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:clickable="true"
-        android:elevation="7dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:translationZ="5dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="3dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lobster_regular"
-                android:text="Happy Thoughts"
-                android:textColor="@color/colorAccent"
-                android:textSize="22sp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lobster_regular"
-                android:padding="7dp"
-                android:text="Concentrate all your thoughts upon the work at hand. The sun's rays do not burn until brought to a focus."
-                android:textColor="#000000"
+                android:textColor="@color/color_black"
                 android:textSize="17sp" />
 
         </LinearLayout>

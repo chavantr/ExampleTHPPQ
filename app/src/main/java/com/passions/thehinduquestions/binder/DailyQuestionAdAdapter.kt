@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.facebook.ads.Ad
-import com.facebook.ads.AdChoicesView
 import com.facebook.ads.NativeAd
 import com.passions.thehinduquestions.QuestionDetailsScrollActivity
 import com.passions.thehinduquestions.QuestionModel
 import com.passions.thehinduquestions.R
 import kotlinx.android.synthetic.main.daily_questions_list.view.*
-import kotlinx.android.synthetic.main.item_native_ad.view.*
+import kotlinx.android.synthetic.main.native_new_item_row.view.*
 
 
 class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,7 +22,7 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             QUESTION -> QuestionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.daily_questions_list, parent, false))
-            NATIVE -> NativeAdViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_native_ad, parent, false))
+            NATIVE -> NativeAdViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.native_new_item_row, parent, false))
             else -> QuestionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.daily_questions_list, parent, false))
         }
     }
@@ -69,18 +68,29 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
         } else if (itemType == NATIVE) {
             val nativeAdViewHolder = viewHolder as NativeAdViewHolder
             var nativeAd = lstQuestion.get(position) as NativeAd
-            nativeAdViewHolder.tvAdTitle.text = nativeAd.advertiserName
-            nativeAdViewHolder.tvAdBody.text = nativeAd.adBodyText
-            nativeAdViewHolder.btnCTA.text = nativeAd.adCallToAction
-            nativeAdViewHolder.sponsorLabel.text = nativeAd.sponsoredTranslation
-            nativeAdViewHolder.adChoicesContainer.removeAllViews()
-            val adChoicesView = AdChoicesView(nativeAdViewHolder.containder.context, nativeAd, true)
-            nativeAdViewHolder.adChoicesContainer.addView(adChoicesView)
+            nativeAdViewHolder.nativeAdTitle.text = nativeAd.advertiserName
+            nativeAdViewHolder.nativeAdBody.text = nativeAd.adBodyText
+            nativeAdViewHolder.nativeAdSocialContext.text = nativeAd.adSocialContext
+            if (nativeAd.hasCallToAction()) {
+                nativeAdViewHolder.nativeAdCallToAction.visibility = View.VISIBLE
+            } else {
+                nativeAdViewHolder.nativeAdCallToAction.visibility = View.GONE
+            }
+            nativeAdViewHolder.nativeAdCallToAction.text = nativeAd.adCallToAction
+            nativeAdViewHolder.sponsoredLabel.text = nativeAd.sponsoredTranslation
+            val clickableViews = ArrayList<View>()
+            clickableViews.add(nativeAdViewHolder.nativeAdTitle)
+            clickableViews.add(nativeAdViewHolder.nativeAdCallToAction)
+            nativeAd.registerViewForInteraction(
+                    nativeAdViewHolder.nativeAdMedia,
+                    nativeAdViewHolder.nativeAdIcon,
+                    clickableViews)
+
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = lstQuestion.get(position)
+        val item = lstQuestion[position]
         return when (item) {
             is QuestionModel -> QUESTION
             is Ad -> NATIVE
@@ -108,13 +118,12 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
     }
 
     inner class NativeAdViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val containder = view
-        val adIconView = view.adIconView
-        val tvAdTitle = view.tvAdTitle
-        val tvAdBody = view.tvAdBody
-        val btnCTA = view.btnCTA
-        val adChoicesContainer = view.adChoicesContainer
-        val mediaView = view.mediaView
-        val sponsorLabel = view.sponsored_label
+        var nativeAdIcon = view.native_ad_icon
+        var nativeAdTitle = view.native_ad_title
+        var nativeAdMedia = view.native_ad_media
+        var nativeAdSocialContext = view.native_ad_social_context
+        var nativeAdBody = view.native_ad_body
+        var sponsoredLabel = view.native_ad_sponsored_label
+        var nativeAdCallToAction = view.native_ad_call_to_action
     }
 }

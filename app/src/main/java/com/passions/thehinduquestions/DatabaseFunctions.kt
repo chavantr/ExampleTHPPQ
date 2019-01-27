@@ -1,33 +1,14 @@
 package com.passions.thehinduquestions
 
 import android.content.ContentValues
-import android.content.Context
-import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 
-class PracticeDatabaseHelper(context: Context?, name: String?,
-                             factory: SQLiteDatabase.CursorFactory?,
-                             version: Int)
-    : SQLiteOpenHelper(context, name, factory, version) {
+class DatabaseFunctions(db:SQLiteDatabase) {
 
+    var myDb :SQLiteDatabase = db
 
-    private val CREATE_MASTER_PRACTICE_QUESTION = "CREATE TABLE IF NOT EXISTS QUESTION_PAPER_MASTER (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT, NAME TEXT, NOQ TEXT, QOT TEXT);"
-
-    private val CREATE_DETAIL_PRACTICE_QUESTION = "CREATE TABLE IF NOT EXISTS QUESTION_PAPER_DETAIL (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTION TEXT, QUE_DES, TEXT, OPTION_A TEXT, OPTION_B TEXT,OPTION_C TEXT,OPTION_D TEXT,CORRECT_ANS TEXT, YOUR_ANS TEXT, Q_ID INTEGER, REF_ID INTEGER);"
-
-
-    override fun onCreate(database: SQLiteDatabase?) {
-        database!!.execSQL(CREATE_MASTER_PRACTICE_QUESTION)
-        database!!.execSQL(CREATE_DETAIL_PRACTICE_QUESTION)
-    }
-
-    override fun onUpgrade(database: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-
-    }
-
-    fun createMasterQuestionPaper(practiceQuestionMaster: PracticeQuestionPaperMasterModel): Int {
-        val db = writableDatabase
+   fun createMasterQuestionPaper(practiceQuestionMaster: PracticeQuestionPaperMasterModel): Int {
+        val db = myDb
         var contentValues = ContentValues()
         contentValues.put("DATE", practiceQuestionMaster.date)
         contentValues.put("NAME", practiceQuestionMaster.name)
@@ -41,7 +22,7 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
     }
 
     fun createQuestionDetail(questionDetail: List<PracticeQuestionDetailModel>): Long {
-        val db = writableDatabase
+        val db = myDb
         var count: Long = 0
         for (i in questionDetail.indices) {
             var contentValues = ContentValues()
@@ -61,7 +42,7 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
     }
 
     fun updateQuestionAnswer(practiceQuestionDetail: PracticeQuestionDetailModel): Int {
-        val db = writableDatabase
+        val db = myDb
         var contentValues = ContentValues()
         contentValues.put("YOUR_ANS", practiceQuestionDetail.yourAns)
         val args = arrayOf(practiceQuestionDetail.id.toString(), practiceQuestionDetail.qid.toString())
@@ -69,7 +50,7 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
     }
 
     fun getQuestionDetails(id: Int): ArrayList<Any>? {
-        val db = readableDatabase
+        val db = myDb
         val args = arrayOf(id.plus(1).toString())
         var cursor = db.query("QUESTION_PAPER_DETAIL", null, "Q_ID=?", args, null, null, null)
         if (cursor.moveToFirst()) {
@@ -96,11 +77,11 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
     }
 
     fun getSolvedMasterPapers(): ArrayList<Any>? {
-        val db = readableDatabase
+        val db = myDb
         var solvedQuestion = ArrayList<Any>()
         var cursor = db.query("QUESTION_PAPER_MASTER", null, null, null, null, null, "DATE DESC")
         if (cursor.moveToFirst()) {
-
+            var solvedQuestion = ArrayList<Any>()
             do {
                 var practiceQuestionMaster = PracticeQuestionPaperMasterModel()
                 practiceQuestionMaster.id = cursor.getInt(cursor.getColumnIndex("ID"))
@@ -110,12 +91,13 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
                 practiceQuestionMaster.oqt = cursor.getString(cursor.getColumnIndex("QOT"))
                 solvedQuestion.add(practiceQuestionMaster)
             } while (cursor.moveToNext())
+            //return solvedQuestion
         }
         return solvedQuestion
     }
 
     private fun getLastInserted(): Int {
-        val db = readableDatabase
+        val db = myDb
         var lastId = 0
         val query = "SELECT ID from QUESTION_PAPER_MASTER order by ID DESC limit 1"
         val c = db.rawQuery(query, null)
@@ -124,4 +106,6 @@ class PracticeDatabaseHelper(context: Context?, name: String?,
         }
         return lastId + 1
     }
+
+
 }
