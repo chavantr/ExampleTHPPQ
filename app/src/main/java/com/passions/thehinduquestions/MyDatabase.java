@@ -20,7 +20,7 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     public List<MonthNameModel> getMonthName() {
         SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.query("MonthCategory", null, "Year=?", new String[]{"2018"}, null, null, null);
+        Cursor cursor = db.query("MonthCategory", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             List<MonthNameModel> monthName = new ArrayList<>();
             do {
@@ -40,9 +40,10 @@ public class MyDatabase extends SQLiteAssetHelper {
     public ArrayList<Object> getQuestionMonthWise(int id) {
         SQLiteDatabase db = getWritableDatabase();
         String[] args = {String.valueOf(id)};
+        ArrayList<Object> questionModels = new ArrayList<>();
         Cursor cursor = db.query("QuestionMaster", null, "CategoryId=?", args, null, null, null);
         if (cursor.moveToFirst()) {
-            ArrayList<Object> questionModels = new ArrayList<>();
+
             do {
                 QuestionModel questionModel = new QuestionModel(String.valueOf(cursor.getInt(cursor.getColumnIndex("ID"))),
                         cursor.getString(cursor.getColumnIndex("Question")),
@@ -60,7 +61,7 @@ public class MyDatabase extends SQLiteAssetHelper {
             } while (cursor.moveToNext());
             return questionModels;
         }
-        return null;
+        return questionModels;
     }
 
     public ArrayList<Object> getPracticeQuestion(int masterId) {
@@ -85,7 +86,6 @@ public class MyDatabase extends SQLiteAssetHelper {
         }
         return null;
     }
-
 
 
 }

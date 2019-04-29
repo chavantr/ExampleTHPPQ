@@ -1,6 +1,7 @@
 package com.passions.thehinduquestions.binder
 
 import android.content.Intent
+import android.speech.tts.TextToSpeech
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -13,11 +14,13 @@ import com.passions.thehinduquestions.QuestionModel
 import com.passions.thehinduquestions.R
 import kotlinx.android.synthetic.main.daily_questions_list.view.*
 import kotlinx.android.synthetic.main.native_new_item_row.view.*
+import java.util.*
 
 
-class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DailyQuestionAdAdapter(questions: List<Any>, textToSpeech: TextToSpeech?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var lstQuestion: List<Any> = questions
+    var textToSpeech = textToSpeech
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -45,6 +48,11 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
                 intent.putExtra("type", questions.type)
                 view.context.startActivity(intent)
             }
+
+            recipeViewHolder.btnListen.setOnClickListener {
+                generate(questions)
+            }
+
             if (questions.viewAnswer) {
                 recipeViewHolder.lblCorrectAnswer.visibility = View.VISIBLE
                 recipeViewHolder.btnShowDetails.visibility = View.VISIBLE
@@ -101,6 +109,7 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
     companion object {
         const val QUESTION = 0
         const val NATIVE = 1
+        const val DELAY = 999L
     }
 
     inner class QuestionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -113,6 +122,7 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
         val lblOptionD = view.lblOptionD
         val bntViewAnsswer = view.btnShowAnswer
         val btnShowDetails = view.btnViewDescription
+        val btnListen = view.btnListen
         val lblCorrectAnswer = view.lblCorrectAnswer
 
     }
@@ -126,4 +136,93 @@ class DailyQuestionAdAdapter(questions: List<Any>) : RecyclerView.Adapter<Recycl
         var sponsoredLabel = view.native_ad_sponsored_label
         var nativeAdCallToAction = view.native_ad_call_to_action
     }
+
+    private fun generate(questionModel: QuestionModel?) {
+        val myHash = HashMap<String, String>()
+        myHash[TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID] = "done"
+
+        textToSpeech!!.speak(
+                "Question ${questionModel!!.questionTitle}",
+                TextToSpeech.QUEUE_FLUSH,
+                myHash
+        )
+        delayIn()
+
+        if (questionModel!!.questionDescription.isNotEmpty()) {
+            textToSpeech!!.speak(
+                    "${questionModel!!.questionDescription}",
+                    TextToSpeech.QUEUE_ADD,
+                    myHash
+            )
+            delayIn()
+        }
+
+
+        textToSpeech!!.speak(
+                "A",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+        delayIn()
+        textToSpeech!!.speak(
+                "A ${questionModel!!.optionA}",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+
+        delayIn()
+        textToSpeech!!.speak(
+                "B",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+        delayIn()
+        textToSpeech!!.speak(
+                "B ${questionModel!!.optionB}",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+
+        delayIn()
+        textToSpeech!!.speak(
+                "C",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+        delayIn()
+        textToSpeech!!.speak(
+                "C ${questionModel!!.optionC}",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+
+        delayIn()
+
+        textToSpeech!!.speak(
+                "D",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+        delayIn()
+        textToSpeech!!.speak(
+                "D ${questionModel!!.optionD}",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+
+        delayIn()
+
+        textToSpeech!!.speak(
+                "Correct Answer is ${questionModel!!.correctAnswer}",
+                TextToSpeech.QUEUE_ADD,
+                myHash
+        )
+
+    }
+
+    private fun delayIn() {
+        textToSpeech!!.playSilence(DELAY, TextToSpeech.QUEUE_ADD, null)
+    }
+
+
 }

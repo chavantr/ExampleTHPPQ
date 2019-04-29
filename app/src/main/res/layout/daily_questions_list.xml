@@ -27,7 +27,6 @@
             android:paddingBottom="3dp"
             android:textColor="@color/color_red" />
 
-
         <TextView
             android:id="@+id/lblQuestionExtraDescription"
             android:layout_width="match_parent"
@@ -36,7 +35,6 @@
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:textColor="@color/colorBlack" />
-
 
         <TextView
             android:id="@+id/lblOptionA"
@@ -116,6 +114,16 @@
             android:textAllCaps="false"
             android:textColor="@color/colorBlack"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnListen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/listen"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack" />
 
 
     </LinearLayout>

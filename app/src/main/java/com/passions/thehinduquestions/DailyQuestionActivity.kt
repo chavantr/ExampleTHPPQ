@@ -1,6 +1,7 @@
 package com.passions.thehinduquestions
 
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.facebook.ads.Ad
@@ -9,19 +10,21 @@ import com.facebook.ads.NativeAd
 import com.facebook.ads.NativeAdListener
 import com.passions.thehinduquestions.binder.DailyQuestionAdAdapter
 import kotlinx.android.synthetic.main.activity_daily_question.*
+import java.util.*
 
 class DailyQuestionActivity : AppCompatActivity() {
 
 
     private lateinit var questionList: ArrayList<Any>
     private lateinit var dailyQuestionAdapter: DailyQuestionAdAdapter
+    private lateinit var textToSpeech: TextToSpeech
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_question)
 
         lstDailyQuestions.layoutManager = LinearLayoutManager(this)
-
+        textToSpeech = TextToSpeech(this, textToSpeechListener)
         val myDatabase = MyDatabase(this, DatabaseConstants.databaseName, null, DatabaseConstants.version)
 
         val id = intent.getIntExtra("id", 0)
@@ -34,7 +37,7 @@ class DailyQuestionActivity : AppCompatActivity() {
 
         nativeAd.loadAd()
 
-        dailyQuestionAdapter = DailyQuestionAdAdapter(questionList)
+        dailyQuestionAdapter = DailyQuestionAdAdapter(questionList, textToSpeech)
 
         if (null != questionList)
         //lstDailyQuestions.adapter = DailyQuestionPaperAdapter(questionList)
@@ -70,5 +73,8 @@ class DailyQuestionActivity : AppCompatActivity() {
         }
 
     }
+
+    private var textToSpeechListener = TextToSpeech.OnInitListener { textToSpeech.language = Locale.US }
+
 
 }

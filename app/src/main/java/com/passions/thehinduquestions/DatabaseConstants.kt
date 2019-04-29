@@ -2,7 +2,7 @@ package com.passions.thehinduquestions
 
 object DatabaseConstants {
 
-    const val version = 1
+    const val version = 6
 
     const val versionExtra = 1
 
